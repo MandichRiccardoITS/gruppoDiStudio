@@ -1,9 +1,10 @@
 # bash/cmt.sh
 # Guarda se ci sono opzioni
-while getopts "mh" opt; do
+while getopts "m:h" opt; do
     case $opt in
         m)
-            messaggio="$OPTARG" # assegno la string apassata come parametro
+            messaggio=" - $OPTARG" # assegno la stringa passata come parametro
+            echo "Messaggio personalizzato: $messaggio"
             ;;
         h)
             echo "  -m  (messaggio): aggiungi un messaggio personale al commit oltre a quello di default"
@@ -11,7 +12,7 @@ while getopts "mh" opt; do
             ;;
         \?)
             echo "Opzione non valida: -$OPTARG" >&2
-            echo "Uso: $0 [-m]"
+            echo "Uso: $0 [-m messaggio]"
             echo "  -m  (messaggio): aggiungi un messaggio personale al commit oltre a quello di default"
             exit 1
             ;;
@@ -26,7 +27,7 @@ git status
 # Crea il nome del commit con data, ora e versione
 nomeCommit="aggiornamento $(date "+%Y %m %d %H:%M")"
 echo "Messaggio commit: $nomeCommit"
-git commit -am "$nomeCommit - $messaggio"
+git commit -am "$nomeCommit$messaggio"
 
 # Esegui il push sul repository remoto
 git push -f
