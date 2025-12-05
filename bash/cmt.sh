@@ -33,4 +33,3 @@ git commit -am "$nomeCommit$messaggio"
 git push -f
 
 sleep 1
-clear
